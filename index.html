@@ -1,0 +1,886 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>CastMee · demo Mynd</title>
+<script src="./react.js"></script>
+<script src="./react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B0B0C}
+a{color:#C6F432}a:hover{color:#E2FF7A}
+.cm *{box-sizing:border-box}
+.cm button{font:inherit;cursor:pointer}
+.tab{background:transparent;border:1px solid transparent;color:#A3A69E;padding:10px 16px;border-radius:999px;font-size:14px;font-weight:600;min-height:44px}
+.tab:hover{color:#F4F4EF}
+.tab.on{background:#1C1D1F;border-color:#34363A;color:#F4F4EF}
+.pill{background:#141516;border:1px solid #2E3034;color:#D6D8D0;padding:10px 16px;border-radius:999px;font-size:14px;font-weight:500;min-height:44px}
+.pill:hover{border-color:#5A5D55}
+.pill.on{background:#C6F432;border-color:#C6F432;color:#0B0B0C;font-weight:700}
+.btn{background:#C6F432;color:#0B0B0C;border:0;border-radius:12px;padding:14px 22px;font-weight:700;font-size:15px;min-height:48px}
+.btn:hover{background:#D8FF5C}
+.btn.off{background:#2A2B2E;color:#8A8D85;cursor:not-allowed}
+.ghost{background:transparent;color:#F4F4EF;border:1px solid #3A3C40;border-radius:12px;padding:13px 20px;font-weight:600;font-size:15px;min-height:48px}
+.ghost:hover{border-color:#C6F432}
+.back{background:transparent;border:0;color:#A3A69E;font-size:14px;font-weight:600;padding:10px 0;min-height:44px;display:inline-flex;align-items:center;gap:8px}
+.back:hover{color:#F4F4EF}
+.mcard{background:#141516;border:1px solid #26272A;border-radius:18px;padding:0;overflow:hidden;text-align:left;color:#F4F4EF;display:flex;flex-direction:column}
+.mcard:hover{border-color:#C6F432}
+.opt{background:#141516;border:1px solid #2E3034;border-radius:14px;padding:16px;text-align:left;color:#F4F4EF;display:flex;flex-direction:column;gap:8px;min-height:44px}
+.opt:hover{border-color:#5A5D55}
+.opt.on{border-color:#C6F432;box-shadow:inset 0 0 0 1px #C6F432}
+.var{background:#141516;border:1px solid #2E3034;border-radius:16px;padding:0;overflow:hidden;color:#F4F4EF;text-align:left;display:flex;flex-direction:column}
+.var:hover{border-color:#5A5D55}
+.var.on{border-color:#C6F432;box-shadow:inset 0 0 0 2px #C6F432}
+.vp0{object-position:50% 20%}
+.vp1{object-position:50% 20%;transform:scaleX(-1)}
+.vp2{object-position:50% 0%;transform:scale(1.35);transform-origin:50% 32%}
+.vp3{object-position:50% 0%;transform:scale(2.6);transform-origin:50% 26%}
+.face{object-position:50% 0%;transform:scale(3.2);transform-origin:50% 26%}
+.t1{background:#3A332A}.t2{background:#2A323A}.t3{background:#343A2A}.t4{background:#3A2A31}.t5{background:#2C3A35}.t6{background:#33303A}.t7{background:#3B3122}.t8{background:#283038}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+.c-auto{color:#C6F432;border:1px solid #4A5A1A;background:#1A2010}
+.c-man{color:#F5B841;border:1px solid #5A4416;background:#211A0C}
+.c-blk{color:#FF8A7E;border:1px solid #5A2420;background:#221110}
+.step{display:flex;align-items:center;gap:8px;color:#8A8D85;font-size:13px;font-weight:600;white-space:nowrap}
+.step .dot{width:26px;height:26px;border-radius:999px;border:1px solid #3A3C40;display:flex;align-items:center;justify-content:center;font-size:12px}
+.step.done{color:#A3A69E}.step.done .dot{background:#2A2B2E;border-color:#2A2B2E;color:#C6F432}
+.step.cur{color:#F4F4EF}.step.cur .dot{background:#C6F432;border-color:#C6F432;color:#0B0B0C}
+.g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.g5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+.split{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:24px;align-items:start}
+.row{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid #1F2023;font-size:14px}
+.row span:first-child{color:#A3A69E}
+.bar{height:6px;border-radius:999px;background:#C6F432;width:0;animation:load 2.2s linear forwards}
+@keyframes load{from{width:0}to{width:100%}}
+.tbl{display:grid;grid-template-columns:minmax(200px,2fr) repeat(4,minmax(110px,1fr));gap:0;min-width:720px}
+.tbl > div{padding:12px 14px;border-bottom:1px solid #1F2023;font-size:14px;display:flex;align-items:center;gap:10px}
+.tbl .th{color:#A3A69E;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em}
+@media (max-width:1100px){.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.g5{grid-template-columns:repeat(2,minmax(0,1fr))}.split{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:640px){.g4,.g3,.g2,.g5{grid-template-columns:minmax(0,1fr)}.hide-sm{display:none}}
+input.f,textarea.f{width:100%;background:#0F1011;border:1px solid #2E3034;border-radius:12px;color:#F4F4EF;padding:14px;font:inherit;font-size:15px;line-height:1.5}
+input.f:focus,textarea.f:focus{outline:2px solid #C6F432;outline-offset:1px}
+</style>
+</helmet>
+<div class="cm" style="min-height:100vh;background:#0B0B0C;color:#F4F4EF;font-family:Inter, system-ui, sans-serif">
+
+<header style="border-bottom:1px solid #1E1F22">
+<div style="max-width:1280px;margin:0 auto;padding:14px 24px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px">
+<div style="display:flex;align-items:center;gap:12px">
+<div style="width:38px;height:38px;border-radius:11px;background:#C6F432;display:flex;align-items:center;justify-content:center;color:#0B0B0C">
+<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round"><path d="M17 7.5A6 6 0 1 0 17 16.5"></path><circle cx="18" cy="12" r="1.6" style="fill:currentColor;stroke:none"></circle></svg>
+</div>
+<div style="display:flex;flex-direction:column;gap:2px">
+<span style="font-family:Sora, sans-serif;font-weight:800;font-size:20px;letter-spacing:-0.02em;line-height:1">CastMee</span>
+<span style="font-size:12px;color:#A3A69E">by ConnectMee · verificado por TrustMee</span>
+</div>
+</div>
+<nav style="display:flex;flex-wrap:wrap;gap:4px" aria-label="Seções">
+<button class="{{nav.catalog}}" onClick="{{goCatalog}}">Catálogo</button>
+<button class="{{nav.agency}}" onClick="{{goAgency}}">Painel da agência</button>
+<button class="{{nav.verify}}" onClick="{{goVerify}}">Verificar</button>
+</nav>
+<div class="hide-sm" style="display:flex;align-items:center;gap:10px;font-size:13px;color:#A3A69E">
+<span>Agência</span>
+<img src="./4b8564ede9b2f4e19110e3d9b0bda04f.png" alt="Mynd" style="height:30px;width:auto;display:block">
+</div>
+</div>
+</header>
+
+<main style="max-width:1280px;margin:0 auto;padding:28px 24px 96px;display:flex;flex-direction:column;gap:28px">
+
+<sc-if value="{{showStepper}}" hint-placeholder-val="{{false}}">
+<div style="display:flex;gap:22px;align-items:center;overflow-x:auto;padding-bottom:4px">
+<sc-for list="{{steps}}" as="st" hint-placeholder-count="5">
+<div class="{{st.cls}}"><span class="dot">{{st.n}}</span><span>{{st.label}}</span></div>
+</sc-for>
+</div>
+</sc-if>
+
+<!-- ============ CATÁLOGO ============ -->
+<sc-if value="{{isCatalog}}" hint-placeholder-val="{{true}}">
+<section style="display:flex;flex-direction:column;gap:36px">
+<div style="display:flex;flex-direction:column;gap:16px;max-width:900px">
+<span style="font-size:13px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#C6F432">Gêmeos digitais licenciados</span>
+<h1 style="margin:0;font-family:Sora, sans-serif;font-size:clamp(32px,5vw,58px);line-height:1.04;letter-spacing:-0.03em;font-weight:800">Reserve creators reais. Gere publi, UGC e vídeo sem precisar de gravação.</h1>
+<p style="margin:0;font-size:18px;line-height:1.55;color:#A3A69E;max-width:760px">Cada creator do casting vira um gêmeo digital verificado pela TrustMee, licenciado por uso no CastMee e produzido pela ConnectMee. Consentido, rastreável e remunerado peça a peça.</p>
+</div>
+
+<div class="g3">
+<div style="background:#141516;border:1px solid #26272A;border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:10px">
+<span style="font-family:Sora, sans-serif;font-weight:700;font-size:18px">TrustMee</span>
+<span style="font-size:13px;font-weight:700;color:#C6F432;text-transform:uppercase;letter-spacing:0.08em">Verifica e certifica</span>
+<p style="margin:0;font-size:15px;line-height:1.5;color:#A3A69E">Documento, prova de vida e captura do gêmeo. Cada imagem ou vídeo sai com certificado próprio e manifesto C2PA.</p>
+</div>
+<div style="background:#141516;border:1px solid #26272A;border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:10px">
+<span style="font-family:Sora, sans-serif;font-weight:700;font-size:18px">CastMee</span>
+<span style="font-size:13px;font-weight:700;color:#C6F432;text-transform:uppercase;letter-spacing:0.08em">Catálogo e licença</span>
+<p style="margin:0;font-size:15px;line-height:1.5;color:#A3A69E">Portfólio da agência com licença pré-aprovada por categoria, preço por uso e aprovação da agência e do creator.</p>
+</div>
+<div style="background:#141516;border:1px solid #26272A;border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:10px">
+<span style="font-family:Sora, sans-serif;font-weight:700;font-size:18px">ConnectMee</span>
+<span style="font-size:13px;font-weight:700;color:#C6F432;text-transform:uppercase;letter-spacing:0.08em">Produz o gêmeo</span>
+<p style="margin:0;font-size:15px;line-height:1.5;color:#A3A69E">Gera imagem, vídeo e voz clonada do creator. Aprovações e repasses chegam pelo WhatsApp.</p>
+</div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:18px">
+<div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px">
+<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+<img src="./4b8564ede9b2f4e19110e3d9b0bda04f.png" alt="Mynd" style="height:36px;width:auto;display:block">
+<span style="width:1px;height:36px;background:#34363A"></span>
+<div style="display:flex;flex-direction:column;gap:2px"><h2 style="margin:0;font-family:Sora, sans-serif;font-size:26px;letter-spacing:-0.02em">Portfólio da agência</h2><span style="font-size:13px;color:#A3A69E">Casting Mynd com gêmeos verificados</span></div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px">
+<sc-for list="{{filters}}" as="fl" hint-placeholder-count="4">
+<button class="{{fl.cls}}" onClick="{{fl.pick}}">{{fl.label}}</button>
+</sc-for>
+</div>
+</div>
+<div class="g4">
+<sc-for list="{{models}}" as="item" hint-placeholder-count="8">
+<button class="mcard" onClick="{{item.pick}}" aria-label="Ver gêmeo de {{item.name}}">
+<div class="{{item.tone}}" style="position:relative;width:100%;aspect-ratio:3/4;overflow:hidden">
+<img src="{{item.photo}}" alt="Gêmeo digital de {{item.name}}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 20%;display:block">
+<span class="chip c-auto" style="position:absolute;top:12px;left:12px;background:#0B0B0C">
+<svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round"><path d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z"></path><path d="M9 12l2 2 4-4"></path></svg>
+TrustMee
+</span>
+<span style="position:absolute;top:12px;right:12px;font-size:12px;font-weight:600;color:#F4F4EF;background:rgba(11,11,12,0.7);padding:4px 10px;border-radius:999px">{{item.board}}</span>
+</div>
+<div style="padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px">
+<span style="font-weight:700;font-size:16px">{{item.name}}</span>
+<span style="font-size:13px;color:#A3A69E">{{item.height}} seguidores · {{item.city}}</span>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px">
+<span style="font-size:13px;color:#D6D8D0">a partir de {{item.from}}/img</span>
+<span style="font-size:13px;font-weight:700;color:#C6F432">Reservar</span>
+</div>
+</div>
+</button>
+</sc-for>
+</div>
+</div>
+
+<div style="background:#111213;border:1px solid #26272A;border-radius:22px;padding:28px;display:flex;flex-direction:column;gap:22px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<h2 style="margin:0;font-family:Sora, sans-serif;font-size:26px;letter-spacing:-0.02em">Verificado. Consentido. Remunerado.</h2>
+<p style="margin:0;color:#A3A69E;font-size:15px">O creator só entra no catálogo depois da TrustMee. Nenhuma peça sai sem licença e certificado.</p>
+</div>
+<div class="g5">
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:Sora, sans-serif;font-size:28px;font-weight:800;color:#C6F432">01</span><span style="font-weight:700">Creator verifica identidade</span><span style="font-size:14px;color:#A3A69E;line-height:1.5">TrustMee: documento, prova de vida e captura do gêmeo (fotos e voz).</span></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:Sora, sans-serif;font-size:28px;font-weight:800;color:#C6F432">02</span><span style="font-weight:700">Define a licença</span><span style="font-size:14px;color:#A3A69E;line-height:1.5">Categorias pré-aprovadas, categorias bloqueadas e preço base por uso.</span></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:Sora, sans-serif;font-size:28px;font-weight:800;color:#C6F432">03</span><span style="font-weight:700">Marca reserva e gera</span><span style="font-size:14px;color:#A3A69E;line-height:1.5">CastMee e ConnectMee: e-commerce, campanha, flat lay ou vídeo falado.</span></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:Sora, sans-serif;font-size:28px;font-weight:800;color:#C6F432">04</span><span style="font-weight:700">Agência e creator aprovam</span><span style="font-size:14px;color:#A3A69E;line-height:1.5">No painel da agência e pelo WhatsApp do creator quando sai do perfil.</span></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-family:Sora, sans-serif;font-size:28px;font-weight:800;color:#C6F432">05</span><span style="font-weight:700">Certificado e repasse</span><span style="font-size:14px;color:#A3A69E;line-height:1.5">Cada peça recebe certificado TrustMee e o split cai para creator e agência.</span></div>
+</div>
+</div>
+</section>
+</sc-if>
+
+<!-- ============ PERFIL ============ -->
+<sc-if value="{{isProfile}}" hint-placeholder-val="{{false}}">
+<section style="display:flex;flex-direction:column;gap:16px">
+<div><button class="back" onClick="{{goCatalog}}"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"><path d="M15 18l-6-6 6-6"></path></svg>Voltar ao catálogo</button></div>
+<div class="split">
+<div style="display:flex;flex-direction:column;gap:14px">
+<div class="{{m.tone}}" style="position:relative;width:100%;aspect-ratio:4/5;border-radius:22px;overflow:hidden">
+<img src="{{m.photo}}" alt="Gêmeo digital de {{m.name}}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 15%;display:block">
+<span class="chip c-auto" style="position:absolute;top:16px;left:16px;background:#0B0B0C">Gêmeo verificado · {{m.tmid}}</span>
+<span style="position:absolute;bottom:16px;left:16px;font-size:12px;color:#F4F4EF;background:rgba(11,11,12,0.75);padding:6px 12px;border-radius:999px">Imagem gerada pelo gêmeo digital</span>
+</div>
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px">
+<div style="aspect-ratio:1/1;border-radius:14px;overflow:hidden;position:relative"><img src="{{m.photo}}" alt="Close do rosto" class="vp3" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></div>
+<div style="aspect-ratio:1/1;border-radius:14px;overflow:hidden;position:relative"><img src="{{m.photo}}" alt="Meio corpo" class="vp2" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></div>
+<div style="aspect-ratio:1/1;border-radius:14px;overflow:hidden;position:relative"><img src="{{m.photo}}" alt="Foto inteira" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;background:#1C1D1F"></div>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:20px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;flex-wrap:wrap;gap:8px"><span class="chip c-auto">Gêmeo verificado TrustMee</span><span class="chip" style="color:#F4F4EF;border:1px solid #34363A">{{m.board}}</span></div>
+<h1 style="margin:0;font-family:Sora, sans-serif;font-size:clamp(30px,4vw,44px);letter-spacing:-0.03em;line-height:1.05">{{m.name}}</h1>
+<span style="color:#A3A69E">{{m.city}} · {{m.jobs}} publis licenciadas</span>
+<div style="display:flex;align-items:center;gap:12px;margin-top:6px"><span style="font-size:13px;color:#A3A69E">Representado(a) por</span><img src="./4b8564ede9b2f4e19110e3d9b0bda04f.png" alt="Mynd" style="height:30px;width:auto;display:block"></div>
+</div>
+
+<div style="background:#141516;border:1px solid #26272A;border-radius:16px;padding:6px 18px">
+<div class="row"><span>Seguidores</span><span>{{m.height}}</span></div>
+<div class="row"><span>Perfil</span><span>{{m.meas}}</span></div>
+<div class="row"><span>Nicho</span><span>{{m.hair}}</span></div>
+<div class="row"><span>Engajamento</span><span>{{m.eyes}}</span></div>
+<div class="row"><span>ID TrustMee do gêmeo</span><span style="font-family:ui-monospace, monospace">{{m.tmid}}</span></div>
+<div class="row" style="border-bottom:0"><span>Captura</span><span>Rosto, corpo e voz</span></div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:12px">
+<span style="font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#A3A69E">Licença definida pelo creator</span>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;color:#A3A69E">Pré-aprovado, sai direto</span><div style="display:flex;flex-wrap:wrap;gap:8px"><sc-for list="{{okList}}" as="c" hint-placeholder-count="3"><span class="chip c-auto">{{c.label}}</span></sc-for></div></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;color:#A3A69E">Precisa do OK do creator no WhatsApp</span><div style="display:flex;flex-wrap:wrap;gap:8px"><sc-for list="{{manualList}}" as="c" hint-placeholder-count="2"><span class="chip c-man">{{c.label}}</span></sc-for></div></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:13px;color:#A3A69E">Bloqueado</span><div style="display:flex;flex-wrap:wrap;gap:8px"><sc-for list="{{blockedList}}" as="c" hint-placeholder-count="2"><span class="chip c-blk">{{c.label}}</span></sc-for></div></div>
+</div>
+
+<div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;background:#141516;border:1px solid #26272A;border-radius:16px;padding:18px">
+<div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:13px;color:#A3A69E">E-commerce, 3 meses, Brasil</span><span style="font-family:Sora, sans-serif;font-size:24px;font-weight:700">a partir de {{m.from}}<span style="font-size:14px;color:#A3A69E;font-weight:500"> por imagem</span></span></div>
+<button class="btn" onClick="{{goBrief}}">Reservar este gêmeo</button>
+</div>
+</div>
+</div>
+</section>
+</sc-if>
+
+<!-- ============ BRIEF ============ -->
+<sc-if value="{{isBrief}}" hint-placeholder-val="{{false}}">
+<section style="display:flex;flex-direction:column;gap:16px">
+<div><button class="back" onClick="{{goProfile}}"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"><path d="M15 18l-6-6 6-6"></path></svg>Voltar ao perfil</button></div>
+<div class="split">
+<div style="display:flex;flex-direction:column;gap:26px">
+<h1 style="margin:0;font-family:Sora, sans-serif;font-size:32px;letter-spacing:-0.02em">Brief da reserva</h1>
+
+<div style="display:flex;flex-direction:column;gap:8px">
+<label for="brand" style="font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#A3A69E">Marca</label>
+<input id="brand" class="f" value="{{brand}}" onChange="{{setBrand}}">
+</div>
+
+<div style="display:flex;flex-direction:column;gap:10px">
+<span style="font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#A3A69E">Formato</span>
+<div class="g2">
+<sc-for list="{{formats}}" as="fo" hint-placeholder-count="4">
+<button class="{{fo.cls}}" onClick="{{fo.pick}}">
+<span style="display:flex;justify-content:space-between;gap:10px;align-items:baseline"><span style="font-weight:700;font-size:16px">{{fo.name}}</span><span style="font-size:13px;color:#C6F432;font-weight:600;white-space:nowrap">{{fo.from}}</span></span>
+<span style="font-size:14px;color:#A3A69E;line-height:1.45">{{fo.desc}}</span>
+</button>
+</sc-for>
+</div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:10px">
+<span style="font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#A3A69E">Produto</span>
+<div class="g2">
+<sc-for list="{{products}}" as="pr" hint-placeholder-count="4">
+<button class="{{pr.cls}}" onClick="{{pr.pick}}">
+<span style="font-weight:700;font-size:16px">{{pr.name}}</span>
+<span style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap"><span style="font-size:13px;color:#A3A69E">{{pr.cat}}</span><span class="{{pr.chipCls}}">{{pr.chipLabel}}</span></span>
+</button>
+</sc-for>
+</div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:10px">
+<span style="font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#A3A69E">Canais de uso</span>
+<div style="display:flex;flex-wrap:wrap;gap:8px">
+<sc-for list="{{channels}}" as="ch" hint-placeholder-count="4"><button class="{{ch.cls}}" onClick="{{ch.toggle}}">{{ch.label}}</button></sc-for>
+</div>
+</div>
+
+<div class="g2">
+<div style="display:flex;flex-direction:column;gap:10px">
+<span style="font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#A3A69E">Prazo</span>
+<div style="display:flex;flex-wrap:wrap;gap:8px"><sc-for list="{{durs}}" as="du" hint-placeholder-count="3"><button class="{{du.cls}}" onClick="{{du.pick}}">{{du.label}}</button></sc-for></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<span style="font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#A3A69E">Território</span>
+<div style="display:flex;flex-wrap:wrap;gap:8px"><sc-for list="{{ters}}" as="te" hint-placeholder-count="3"><button class="{{te.cls}}" onClick="{{te.pick}}">{{te.label}}</button></sc-for></div>
+</div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:8px">
+<label for="prompt" style="font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#A3A69E">Direção criativa</label>
+<textarea id="prompt" class="f" rows="4" value="{{prompt}}" onChange="{{setPrompt}}"></textarea>
+</div>
+</div>
+
+<div style="background:#141516;border:1px solid #26272A;border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;gap:14px;align-items:center">
+<div style="width:56px;height:70px;border-radius:12px;overflow:hidden;position:relative;flex:0 0 auto"><img src="{{m.photo}}" alt="{{m.name}}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 10%;display:block"></div>
+<div style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:700">{{m.name}}</span><span style="font-size:13px;color:#A3A69E">{{m.board}} · {{p.name}}</span></div>
+</div>
+<div><span class="{{polChip}}">{{polText}}</span></div>
+<div style="display:flex;flex-direction:column">
+<div class="row"><span>Base {{f.name}}</span><span>{{price.base}}</span></div>
+<div class="row"><span>Tier {{m.board}}</span><span>{{price.board}}</span></div>
+<div class="row"><span>Canais</span><span>{{price.ch}}</span></div>
+<div class="row"><span>Prazo {{d.label}}</span><span>{{price.dur}}</span></div>
+<div class="row"><span>Território {{t.label}}</span><span>{{price.ter}}</span></div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;padding-top:14px"><span style="color:#A3A69E;font-size:14px">Licença por peça</span><span style="font-family:Sora, sans-serif;font-size:28px;font-weight:800">{{price.unit}}</span></div>
+</div>
+<p style="margin:0;font-size:13px;color:#A3A69E;line-height:1.5">Gere quantas variações quiser. Você só licencia e paga as peças que usar.</p>
+<sc-if value="{{isBlocked}}" hint-placeholder-val="{{false}}">
+<div style="display:flex;flex-direction:column;gap:10px">
+<p style="margin:0;font-size:14px;color:#FF8A7E;line-height:1.5">{{m.first}} bloqueou a categoria {{p.cat}}. O CastMee não gera esse conteúdo com o gêmeo dele(a).</p>
+<button class="btn off" aria-disabled="true">Gerar variações</button>
+</div>
+</sc-if>
+<sc-if value="{{notBlocked}}" hint-placeholder-val="{{true}}">
+<button class="btn" onClick="{{generate}}">Gerar variações</button>
+</sc-if>
+</div>
+</div>
+</section>
+</sc-if>
+
+<!-- ============ GERAÇÃO ============ -->
+<sc-if value="{{isGen}}" hint-placeholder-val="{{false}}">
+<section style="display:flex;flex-direction:column;gap:20px">
+<div><button class="back" onClick="{{goBrief}}"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"><path d="M15 18l-6-6 6-6"></path></svg>Ajustar brief</button></div>
+<sc-if value="{{s.generating}}" hint-placeholder-val="{{false}}">
+<div style="background:#141516;border:1px solid #26272A;border-radius:20px;padding:32px;display:flex;flex-direction:column;gap:18px;max-width:720px">
+<h1 style="margin:0;font-family:Sora, sans-serif;font-size:28px;letter-spacing:-0.02em">Gerando com o gêmeo de {{m.first}}</h1>
+<div style="background:#1F2023;border-radius:999px;overflow:hidden"><div class="bar"></div></div>
+<div style="display:flex;flex-direction:column;gap:8px;font-size:14px;color:#A3A69E">
+<span>Validando licença TrustMee {{m.tmid}} para {{p.cat}}</span>
+<span>Compondo {{p.name}} no gêmeo ({{f.name}})</span>
+<span>Gravando Content Credentials em cada peça</span>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{s.generated}}" hint-placeholder-val="{{false}}">
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px">
+<div style="display:flex;flex-direction:column;gap:6px">
+<h1 style="margin:0;font-family:Sora, sans-serif;font-size:32px;letter-spacing:-0.02em">4 variações prontas</h1>
+<span style="color:#A3A69E;font-size:15px">{{f.name}} · {{p.name}} · {{m.name}}. Selecione o que vai licenciar.</span>
+</div>
+<button class="ghost" onClick="{{generate}}">Gerar de novo</button>
+</div>
+<div class="g4">
+<sc-for list="{{variations}}" as="va" hint-placeholder-count="4">
+<button class="{{va.cls}}" onClick="{{va.toggle}}" aria-pressed="{{va.pressed}}">
+<div class="{{va.tone}}" style="position:relative;width:100%;aspect-ratio:3/4;overflow:hidden">
+<img src="{{va.photo}}" alt="{{va.label}}" class="{{va.imgCls}}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+<span style="position:absolute;bottom:12px;left:12px;right:12px;font-size:12px;font-weight:600;color:#0B0B0C;background:#C6F432;padding:5px 10px;border-radius:8px;text-align:center">{{va.productName}}</span>
+<span style="position:absolute;top:12px;left:12px;font-size:11px;font-weight:700;color:#F4F4EF;background:rgba(11,11,12,0.75);padding:4px 8px;border-radius:6px">C2PA · TrustMee</span>
+<sc-if value="{{va.isVideo}}" hint-placeholder-val="{{false}}">
+<span style="position:absolute;top:40%;left:50%;margin-left:-26px;width:52px;height:52px;border-radius:999px;background:rgba(11,11,12,0.8);display:flex;align-items:center;justify-content:center;color:#C6F432"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" style="fill:currentColor"><path d="M8 5v14l11-7z"></path></svg></span>
+</sc-if>
+</div>
+<div style="padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:8px">
+<span style="font-weight:600;font-size:14px">{{va.label}}</span>
+<span style="font-size:12px;font-weight:700;color:#C6F432">{{va.check}}</span>
+</div>
+</button>
+</sc-for>
+</div>
+<div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;background:#141516;border:1px solid #26272A;border-radius:18px;padding:18px 22px">
+<div style="display:flex;flex-direction:column;gap:4px"><span style="color:#A3A69E;font-size:14px">{{n}} selecionada(s) × {{price.unit}}</span><span style="font-family:Sora, sans-serif;font-size:26px;font-weight:800">{{price.total}}</span></div>
+<button class="{{sendCls}}" onClick="{{toApprove}}">Enviar para aprovação</button>
+</div>
+</sc-if>
+</section>
+</sc-if>
+
+<!-- ============ APROVAÇÃO ============ -->
+<sc-if value="{{isApprove}}" hint-placeholder-val="{{false}}">
+<section style="display:flex;flex-direction:column;gap:20px">
+<div><button class="back" onClick="{{goGen}}"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"><path d="M15 18l-6-6 6-6"></path></svg>Voltar às variações</button></div>
+<div style="display:flex;flex-direction:column;gap:6px">
+<h1 style="margin:0;font-family:Sora, sans-serif;font-size:32px;letter-spacing:-0.02em">Aprovação dupla</h1>
+<span style="color:#A3A69E;font-size:15px">{{s.brand}} quer licenciar {{n}} {{assetWord}} de {{m.name}}. Nada é publicado sem os dois OKs.</span>
+</div>
+<div class="g2">
+<div style="background:#141516;border:1px solid #26272A;border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><span style="display:flex;align-items:center;gap:12px"><img src="./4b8564ede9b2f4e19110e3d9b0bda04f.png" alt="Mynd" style="height:34px;width:auto;display:block"><span style="font-family:Sora, sans-serif;font-weight:700;font-size:18px">Agência</span></span><span class="{{agencyChip}}">{{agencyStatus}}</span></div>
+<div style="display:flex;flex-direction:column">
+<div class="row"><span>Marca</span><span>{{s.brand}}</span></div>
+<div class="row"><span>Produto</span><span>{{p.name}} ({{p.cat}})</span></div>
+<div class="row"><span>Formato</span><span>{{f.name}}</span></div>
+<div class="row"><span>Uso</span><span style="text-align:right">{{channelsText}}</span></div>
+<div class="row"><span>Prazo e território</span><span>{{d.label}} · {{t.label}}</span></div>
+<div class="row" style="border-bottom:0"><span>Repasse da agência</span><span style="color:#C6F432;font-weight:700">{{price.agency}}</span></div>
+</div>
+<sc-if value="{{agencyPending}}" hint-placeholder-val="{{true}}">
+<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" onClick="{{approveAgency}}">Aprovar como agência</button><button class="ghost" onClick="{{rejectAgency}}">Recusar</button></div>
+</sc-if>
+<sc-if value="{{s.agencyNo}}" hint-placeholder-val="{{false}}">
+<div style="display:flex;flex-direction:column;gap:10px"><span style="font-size:14px;color:#FF8A7E">Recusado pela agência. A marca recebe o motivo e pode ajustar o brief.</span><button class="ghost" onClick="{{undoAgency}}">Desfazer</button></div>
+</sc-if>
+</div>
+
+<div style="background:#141516;border:1px solid #26272A;border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><span style="font-family:Sora, sans-serif;font-weight:700;font-size:18px">Creator</span><span class="{{modelChip}}">{{modelStatus}}</span></div>
+<sc-if value="{{isAuto}}" hint-placeholder-val="{{true}}">
+<div style="display:flex;flex-direction:column;gap:10px">
+<p style="margin:0;font-size:15px;line-height:1.55;color:#D6D8D0">{{p.cat}} está na licença pré-aprovada de {{m.first}}. A TrustMee registra o consentimento já assinado e notifica o creator pelo WhatsApp.</p>
+<div style="background:#0F1011;border:1px solid #26272A;border-radius:14px;padding:14px;font-size:13px;color:#A3A69E;line-height:1.5">Notificação enviada: "{{m.first}}, seu gêmeo foi licenciado por {{s.brand}} para {{p.name}}. Repasse previsto: {{price.model}}."</div>
+</div>
+</sc-if>
+<sc-if value="{{isManual}}" hint-placeholder-val="{{false}}">
+<div style="background:#0E1512;border:1px solid #1E3329;border-radius:16px;overflow:hidden">
+<div style="background:#14211B;padding:12px 14px;display:flex;align-items:center;gap:10px">
+<span style="width:32px;height:32px;border-radius:999px;background:#C6F432;color:#0B0B0C;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px">C</span>
+<div style="display:flex;flex-direction:column"><span style="font-weight:700;font-size:14px">ConnectMee</span><span style="font-size:12px;color:#8FB5A2">WhatsApp de {{m.first}}</span></div>
+</div>
+<div style="padding:14px;display:flex;flex-direction:column;gap:10px">
+<div style="align-self:flex-start;max-width:92%;background:#1B2A23;border-radius:4px 14px 14px 14px;padding:12px 14px;font-size:14px;line-height:1.5;color:#E6EFE9">{{waText}}</div>
+<sc-if value="{{modelPending}}" hint-placeholder-val="{{true}}">
+<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" onClick="{{approveModel}}">Simular resposta: APROVO</button><button class="ghost" onClick="{{rejectModel}}">RECUSO</button></div>
+</sc-if>
+<sc-if value="{{s.modelOk}}" hint-placeholder-val="{{false}}">
+<div style="align-self:flex-end;background:#2E4A1E;border-radius:14px 4px 14px 14px;padding:10px 14px;font-size:14px;color:#F4F4EF">APROVO</div>
+<div style="align-self:flex-start;background:#1B2A23;border-radius:4px 14px 14px 14px;padding:10px 14px;font-size:13px;color:#C9DAD0">Consentimento registrado na TrustMee às {{s.modelOkAt}}.</div>
+</sc-if>
+<sc-if value="{{s.modelNo}}" hint-placeholder-val="{{false}}">
+<div style="align-self:flex-end;background:#4A1E1E;border-radius:14px 4px 14px 14px;padding:10px 14px;font-size:14px;color:#F4F4EF">RECUSO</div>
+<button class="ghost" onClick="{{undoModel}}">Desfazer simulação</button>
+</sc-if>
+</div>
+</div>
+</sc-if>
+</div>
+</div>
+<div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;background:#141516;border:1px solid #26272A;border-radius:18px;padding:18px 22px">
+<span style="color:#A3A69E;font-size:14px;max-width:640px">Com os dois OKs, a TrustMee emite um certificado por peça e o CastMee libera o download com Content Credentials.</span>
+<button class="{{issueCls}}" onClick="{{issue}}">Emitir licença e certificado</button>
+</div>
+</section>
+</sc-if>
+
+<!-- ============ LICENÇA ============ -->
+<sc-if value="{{isLicense}}" hint-placeholder-val="{{false}}">
+<section style="display:flex;flex-direction:column;gap:20px">
+<sc-if value="{{hasCert}}" hint-placeholder-val="{{false}}">
+<div style="display:flex;flex-direction:column;gap:6px">
+<span class="chip c-auto" style="align-self:flex-start">Licença ativa</span>
+<h1 style="margin:0;font-family:Sora, sans-serif;font-size:32px;letter-spacing:-0.02em">Licenciado, certificado e pago</h1>
+</div>
+<div class="split">
+<div style="background:#F4F4EF;color:#0B0B0C;border-radius:22px;padding:26px;display:flex;flex-direction:column;gap:18px">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap">
+<div style="display:flex;align-items:center;gap:12px">
+<span style="width:44px;height:44px;border-radius:12px;background:#0B0B0C;color:#C6F432;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"><path d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z"></path><path d="M9 12l2 2 4-4"></path></svg></span>
+<div style="display:flex;flex-direction:column"><span style="font-family:Sora, sans-serif;font-weight:800;font-size:20px">Certificado TrustMee</span><span style="font-size:13px;color:#4A4C47">Emitido em {{cert.date}}</span></div>
+</div>
+<span style="font-family:ui-monospace, monospace;font-size:15px;font-weight:700;background:#C6F432;padding:6px 12px;border-radius:8px">{{cert.id}}</span>
+</div>
+<div class="g2" style="gap:0 24px">
+<div class="row" style="border-color:#DCDDD6"><span style="color:#4A4C47">Gêmeo</span><span>{{cert.model}}</span></div>
+<div class="row" style="border-color:#DCDDD6;align-items:center"><span style="color:#4A4C47">Agência</span><img src="./4b8564ede9b2f4e19110e3d9b0bda04f.png" alt="Mynd" style="height:26px;width:auto;display:block;filter:invert(1)"></div>
+<div class="row" style="border-color:#DCDDD6"><span style="color:#4A4C47">Marca</span><span>{{cert.brand}}</span></div>
+<div class="row" style="border-color:#DCDDD6"><span style="color:#4A4C47">Produto</span><span>{{cert.product}}</span></div>
+<div class="row" style="border-color:#DCDDD6"><span style="color:#4A4C47">Formato</span><span>{{cert.format}}</span></div>
+<div class="row" style="border-color:#DCDDD6"><span style="color:#4A4C47">Canais</span><span style="text-align:right">{{cert.channels}}</span></div>
+<div class="row" style="border-color:#DCDDD6"><span style="color:#4A4C47">Válido até</span><span>{{cert.validUntil}} · {{cert.ter}}</span></div>
+<div class="row" style="border-color:#DCDDD6"><span style="color:#4A4C47">Aprovações</span><span style="text-align:right">{{cert.approvals}}</span></div>
+<div class="row" style="border-color:#DCDDD6"><span style="color:#4A4C47">Padrão</span><span style="text-align:right">C2PA + manifesto TrustMee</span></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#4A4C47">Hash do manifesto</span><span style="font-family:ui-monospace, monospace;font-size:13px;word-break:break-all;color:#1F201D">{{cert.hash}}</span></div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<span style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#4A4C47">Peças licenciadas</span>
+<div style="display:flex;flex-wrap:wrap;gap:12px">
+<sc-for list="{{cert.assets}}" as="as" hint-placeholder-count="2">
+<div style="display:flex;flex-direction:column;gap:6px;width:120px">
+<div style="width:120px;height:150px;border-radius:12px;overflow:hidden;position:relative"><img src="{{as.photo}}" alt="{{as.label}}" class="{{as.imgCls}}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"><span style="position:absolute;bottom:6px;left:6px;font-size:10px;font-weight:700;color:#0B0B0C;background:#C6F432;padding:2px 6px;border-radius:5px">TrustMee</span></div>
+<span style="font-size:12px;font-weight:600">{{as.label}}</span>
+<span style="font-family:ui-monospace, monospace;font-size:11px;color:#4A4C47">{{as.aid}}</span>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:16px">
+<div style="background:#141516;border:1px solid #26272A;border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:6px">
+<span style="font-family:Sora, sans-serif;font-weight:700;font-size:18px">Repasse automático</span>
+<span style="font-size:13px;color:#A3A69E;margin-bottom:8px">Split ilustrativo, ajustável por contrato</span>
+<sc-for list="{{cert.split}}" as="sp" hint-placeholder-count="4">
+<div class="row"><span>{{sp.label}}</span><span style="font-weight:700">{{sp.value}}</span></div>
+</sc-for>
+<div style="display:flex;justify-content:space-between;align-items:baseline;padding-top:12px"><span style="color:#A3A69E">Total da licença</span><span style="font-family:Sora, sans-serif;font-size:26px;font-weight:800">{{cert.totalFmt}}</span></div>
+</div>
+<button class="btn" onClick="{{goVerifyCert}}">Verificar este certificado</button>
+<button class="ghost" onClick="{{goAgency}}">Ver no painel da agência</button>
+<button class="ghost" onClick="{{goCatalog}}">Nova reserva</button>
+</div>
+</div>
+</sc-if>
+</section>
+</sc-if>
+
+<!-- ============ PAINEL DA AGÊNCIA ============ -->
+<sc-if value="{{isAgency}}" hint-placeholder-val="{{false}}">
+<section style="display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-direction:column;gap:6px">
+<div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+<img src="./4b8564ede9b2f4e19110e3d9b0bda04f.png" alt="Mynd" style="height:44px;width:auto;display:block">
+<span style="width:1px;height:44px;background:#34363A"></span>
+<h1 style="margin:0;font-family:Sora, sans-serif;font-size:34px;letter-spacing:-0.02em">Painel da agência</h1>
+</div>
+<span style="color:#A3A69E;font-size:15px">Casting Mynd no CastMee. Números de exemplo, somados às licenças emitidas nesta demo.</span>
+</div>
+<div class="g4">
+<sc-for list="{{kpis}}" as="k" hint-placeholder-count="4">
+<div style="background:#141516;border:1px solid #26272A;border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:6px">
+<span style="font-size:13px;color:#A3A69E">{{k.label}}</span>
+<span style="font-family:Sora, sans-serif;font-size:32px;font-weight:800;letter-spacing:-0.02em">{{k.value}}</span>
+<span style="font-size:13px;color:#8A8D85">{{k.note}}</span>
+</div>
+</sc-for>
+</div>
+
+<div class="split">
+<div style="background:#141516;border:1px solid #26272A;border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:12px;min-width:0">
+<span style="font-family:Sora, sans-serif;font-weight:700;font-size:18px">Creators e gêmeos</span>
+<div style="overflow-x:auto">
+<div class="tbl">
+<div class="th">Creator</div><div class="th">Tier</div><div class="th">TrustMee</div><div class="th">Licenças</div><div class="th">Receita creator</div>
+<sc-for list="{{roster}}" as="r" hint-placeholder-count="8">
+<div><span style="width:36px;height:36px;border-radius:999px;overflow:hidden;position:relative;flex:0 0 auto;display:inline-block"><img src="{{r.photo}}" alt="" class="face" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></span><span style="font-weight:600">{{r.name}}</span></div>
+<div style="color:#D6D8D0">{{r.board}}</div>
+<div><span class="chip c-auto">Verificado</span></div>
+<div>{{r.lic}}</div>
+<div>{{r.rev}}</div>
+</sc-for>
+</div>
+</div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:16px">
+<div style="background:#141516;border:1px solid #26272A;border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:12px">
+<span style="font-family:Sora, sans-serif;font-weight:700;font-size:18px">Aprovações pendentes</span>
+<sc-for list="{{pending}}" as="pe" hint-placeholder-count="2">
+<div style="border:1px solid #26272A;border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:6px">
+<span style="font-weight:700">{{pe.brand}} · {{pe.model}}</span>
+<span style="font-size:13px;color:#A3A69E">{{pe.item}}</span>
+<span style="font-size:13px;color:#F5B841">{{pe.why}}</span>
+<sc-if value="{{pe.hasAction}}" hint-placeholder-val="{{false}}"><button class="btn" style="align-self:flex-start;margin-top:4px" onClick="{{pe.review}}">Revisar agora</button></sc-if>
+</div>
+</sc-for>
+</div>
+<div style="background:#141516;border:1px solid #26272A;border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:10px">
+<span style="font-family:Sora, sans-serif;font-weight:700;font-size:18px">Últimos certificados</span>
+<sc-for list="{{recent}}" as="rc" hint-placeholder-count="2">
+<div class="row"><span style="font-family:ui-monospace, monospace;color:#C6F432">{{rc.id}}</span><span style="text-align:right">{{rc.model}} · {{rc.brand}}</span></div>
+</sc-for>
+</div>
+<div style="background:#111213;border:1px dashed #3A3C40;border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:10px">
+<span style="font-family:Sora, sans-serif;font-weight:700;font-size:18px">Trazer o portfólio inteiro</span>
+<span style="font-size:14px;color:#A3A69E;line-height:1.5">Envio em lote: fotos e vídeos do perfil, vídeo curto com fala e termo de licença por categoria. Cada creator passa pela TrustMee antes de aparecer no catálogo.</span>
+<button class="ghost" style="align-self:flex-start" onClick="{{toggleImport}}">{{importLabel}}</button>
+<sc-if value="{{s.importOpen}}" hint-placeholder-val="{{false}}">
+<div style="display:flex;flex-direction:column;gap:6px;font-size:14px;color:#D6D8D0">
+<span>1. Planilha do casting com perfis, nichos e tiers</span>
+<span>2. Link de verificação TrustMee enviado no WhatsApp de cada creator</span>
+<span>3. Creator escolhe categorias liberadas e bloqueadas</span>
+<span>4. Gêmeo publicado no catálogo com selo TrustMee</span>
+</div>
+</sc-if>
+</div>
+</div>
+</div>
+</section>
+</sc-if>
+
+<!-- ============ VERIFICAR ============ -->
+<sc-if value="{{isVerify}}" hint-placeholder-val="{{false}}">
+<section style="display:flex;flex-direction:column;gap:22px;max-width:880px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<span style="font-size:13px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#C6F432">TrustMee</span>
+<h1 style="margin:0;font-family:Sora, sans-serif;font-size:clamp(30px,4vw,44px);letter-spacing:-0.03em;line-height:1.05">Verificar uma peça</h1>
+<p style="margin:0;color:#A3A69E;font-size:16px;line-height:1.55">Quem certifica não é quem emite. Toda imagem ou vídeo com o gêmeo de um creator precisa de certificado TrustMee. Sem certificado, trate como não autorizado.</p>
+</div>
+<div style="background:#141516;border:1px solid #26272A;border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:14px">
+<label for="vid" style="font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#A3A69E">ID do certificado ou da peça</label>
+<div style="display:flex;gap:10px;flex-wrap:wrap">
+<input id="vid" class="f" style="flex:1 1 280px;font-family:ui-monospace, monospace" value="{{s.verifyInput}}" onChange="{{setVerify}}" placeholder="TM-2026-XXXXXX">
+<button class="btn" onClick="{{doVerify}}">Verificar</button>
+</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+<sc-if value="{{hasLast}}" hint-placeholder-val="{{false}}"><button class="pill" onClick="{{useLast}}">Usar o certificado desta demo</button></sc-if>
+<button class="pill" onClick="{{useSample}}">Exemplo válido</button>
+<button class="pill" onClick="{{useFake}}">Conteúdo sem certificado</button>
+</div>
+</div>
+<sc-if value="{{vFound}}" hint-placeholder-val="{{false}}">
+<div style="background:#141516;border:1px solid #4A5A1A;border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;align-items:center;gap:12px"><span style="width:40px;height:40px;border-radius:999px;background:#C6F432;color:#0B0B0C;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round"><path d="M20 6L9 17l-5-5"></path></svg></span><div style="display:flex;flex-direction:column"><span style="font-family:Sora, sans-serif;font-weight:700;font-size:20px">Certificado válido</span><span style="font-size:13px;color:#A3A69E;font-family:ui-monospace, monospace">{{vc.id}}</span></div></div>
+<div class="g2" style="gap:0 24px">
+<div class="row"><span>Gêmeo</span><span>{{vc.model}}</span></div>
+<div class="row" style="align-items:center"><span>Agência</span><img src="./4b8564ede9b2f4e19110e3d9b0bda04f.png" alt="Mynd" style="height:24px;width:auto;display:block"></div>
+<div class="row"><span>Marca</span><span>{{vc.brand}}</span></div>
+<div class="row"><span>Produto</span><span>{{vc.product}}</span></div>
+<div class="row"><span>Formato</span><span>{{vc.format}}</span></div>
+<div class="row"><span>Canais</span><span style="text-align:right">{{vc.channels}}</span></div>
+<div class="row"><span>Válido até</span><span>{{vc.validUntil}} · {{vc.ter}}</span></div>
+</div>
+<span style="font-size:13px;color:#A3A69E">Uso fora desse escopo gera alerta para a agência e para o creator.</span>
+</div>
+</sc-if>
+<sc-if value="{{vNone}}" hint-placeholder-val="{{false}}">
+<div style="background:#141516;border:1px solid #5A2420;border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;align-items:center;gap:12px"><span style="width:40px;height:40px;border-radius:999px;background:#FF8A7E;color:#0B0B0C;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round"><path d="M12 8v5"></path><path d="M12 17h.01"></path></svg></span><span style="font-family:Sora, sans-serif;font-weight:700;font-size:20px">Sem certificado TrustMee</span></div>
+<p style="margin:0;font-size:15px;color:#D6D8D0;line-height:1.55">Nenhuma licença encontrada para esse ID. Se a peça usa o rosto ou a voz de um creator verificado, ela é tratada como não autorizada e a agência é notificada.</p>
+</div>
+</sc-if>
+</section>
+</sc-if>
+
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1800}}'>
+const MODELS = [
+  {id:'m1',name:'Ana Beatriz Lopes',board:'Macro',city:'São Paulo',height:'480 mil',meas:'@anabealopes',hair:'Moda e lifestyle',eyes:'4,8%',tone:'t1',ok:['Moda', 'Beleza', 'Varejo'],manual:['Esporte'],blocked:['Bebida alcoólica', 'Política'],jobs:42},
+  {id:'m2',name:'Rafael Costa',board:'Macro',city:'Rio de Janeiro',height:'620 mil',meas:'@rafacostafit',hair:'Fitness e corrida',eyes:'5,2%',tone:'t2',ok:['Esporte', 'Varejo', 'Moda'],manual:['Bebida alcoólica', 'Beleza'],blocked:['Política'],jobs:31},
+  {id:'m3',name:'Júlia Martins',board:'Micro',city:'Curitiba',height:'86 mil',meas:'@juliamartins',hair:'Beleza e skincare',eyes:'7,9%',tone:'t3',ok:['Beleza', 'Moda'],manual:['Varejo', 'Esporte'],blocked:['Bebida alcoólica', 'Política'],jobs:6},
+  {id:'m4',name:'Thiago Rocha',board:'Micro',city:'Belo Horizonte',height:'94 mil',meas:'@thiagojoga',hair:'Tecnologia e games',eyes:'6,4%',tone:'t4',ok:['Varejo', 'Esporte'],manual:['Moda', 'Beleza'],blocked:['Política'],jobs:4},
+  {id:'m5',name:'Camila Duarte',board:'Mega',city:'São Paulo',height:'2,4 mi',meas:'@camiladuarte',hair:'Beleza e lifestyle',eyes:'3,6%',tone:'t5',ok:['Beleza', 'Moda', 'Varejo', 'Esporte'],manual:['Bebida alcoólica'],blocked:['Política'],jobs:58},
+  {id:'m6',name:'Lucas Almeida',board:'Macro',city:'Salvador',height:'710 mil',meas:'@lucasalmeida',hair:'Música e dança',eyes:'6,1%',tone:'t6',ok:['Moda', 'Esporte', 'Varejo'],manual:['Beleza'],blocked:['Bebida alcoólica', 'Política'],jobs:27},
+  {id:'m7',name:'Marina Ferraz',board:'Mega',city:'Florianópolis',height:'1,3 mi',meas:'@marinaferraz',hair:'Bem-estar e yoga',eyes:'4,4%',tone:'t7',ok:['Esporte', 'Beleza', 'Moda'],manual:['Varejo', 'Bebida alcoólica'],blocked:['Política'],jobs:36},
+  {id:'m8',name:'Pedro Sales',board:'Macro',city:'Recife',height:'540 mil',meas:'@pedronacozinha',hair:'Gastronomia',eyes:'5,7%',tone:'t8',ok:['Varejo', 'Moda'],manual:['Esporte', 'Beleza', 'Bebida alcoólica'],blocked:['Política'],jobs:19}
+];
+const PHOTOS = {
+  m1:'./eb2adae3cd49d908d4804d3ab5d538b9.webp', m2:'./4e0f736283a52db21f9e7ea37fcba044.webp',
+  m3:'./544f69b9f07013f7584242f00e2a92c9.webp', m4:'./b1d66766f58fbd2557cd7ac7c041ef3b.webp',
+  m5:'./dd05f5fb6e93df06bb6334933dcc65f3.webp', m6:'./c5ef82d02ccbf6cd7f1de84335b11ad1.webp',
+  m7:'./6495132336f229931ca891a91893b0bf.webp', m8:'./642fa1c54de46156570d6afff42d7dd6.webp'
+};
+MODELS.forEach(x => { x.photo = PHOTOS[x.id]; });
+const PRODUCTS = [
+  {id:'p1',name:'Vestido midi de linho',cat:'Moda'},
+  {id:'p2',name:'Sérum facial vitamina C',cat:'Beleza'},
+  {id:'p3',name:'Tênis de corrida',cat:'Esporte'},
+  {id:'p4',name:'Cerveja artesanal',cat:'Bebida alcoólica'}
+];
+const FORMATS = [
+  {id:'ecom',name:'Publi no feed',desc:'Foto do creator com o produto, no estilo do perfil.',base:90},
+  {id:'camp',name:'Campanha',desc:'Cenário, luz e direção editorial para a marca.',base:280},
+  {id:'flat',name:'Stories',desc:'Sequência vertical 9:16 com gancho, produto e link.',base:60},
+  {id:'ugc',name:'Vídeo UGC falado',desc:'O gêmeo fala do produto com a voz clonada do creator. Até 30s.',base:450}
+];
+const POSES = {
+  ecom:['Feed 4:5','Carrossel 1','Carrossel 2','Detalhe do produto'],
+  camp:['Rua, fim de tarde','Interior editorial','Movimento','Close'],
+  flat:['Story 1 · gancho','Story 2 · produto','Story 3 · prova','Story 4 · link'],
+  ugc:['Take 1 · 15s','Take 2 · 30s','Take 3 · gancho','Take 4 · CTA']
+};
+const BOARD = {'Mega': 1.6, 'Macro': 1.2, 'Micro': 0.8};
+const DUR = [{id:'3',label:'3 meses',m:1,months:3},{id:'6',label:'6 meses',m:1.4,months:6},{id:'12',label:'12 meses',m:2,months:12}];
+const TER = [{id:'BR',label:'Brasil',m:1},{id:'LA',label:'América Latina',m:1.5},{id:'GL',label:'Global',m:2.5}];
+const CHANNELS = [{id:'site',label:'Perfil do creator (collab)',add:0},{id:'social',label:'Redes da marca',add:0.3},{id:'paid',label:'Mídia paga (whitelisting)',add:0.6},{id:'ooh',label:'Site, e-commerce e OOH',add:1}];
+const SPLIT = [{label:'Creator',pct:0.5},{label:'Agência',pct:0.2},{label:'CastMee',pct:0.25},{label:'TrustMee (certificação)',pct:0.05}];
+const POL = {auto:{label:'Pré-aprovado',cls:'chip c-auto'},manual:{label:'Aprovação do creator',cls:'chip c-man'},blocked:{label:'Bloqueado',cls:'chip c-blk'}};
+
+function fakeHash(str){
+  let out = '';
+  for (let r = 0; r < 8; r++) {
+    let h = 0x811c9dc5 ^ (r * 2654435761);
+    for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; }
+    out += (h >>> 0).toString(16).padStart(8, '0');
+  }
+  return out;
+}
+function fmt(v){ return 'R$ ' + Math.round(v).toLocaleString('pt-BR'); }
+function r10(v){ return Math.round(v / 10) * 10; }
+function mult(v){ return 'x' + v.toFixed(1).replace('.', ','); }
+function policyOf(m, cat){ if (m.ok.indexOf(cat) >= 0) return 'auto'; if (m.blocked.indexOf(cat) >= 0) return 'blocked'; return 'manual'; }
+function initialsOf(name){ const w = name.split(' '); return (w[0][0] + w[w.length - 1][0]).toUpperCase(); }
+function tmidOf(m){ return 'TMG-' + fakeHash(m.id + m.name).slice(0, 8).toUpperCase(); }
+
+const SAMPLE_CERT = {
+  id:'TM-2026-7F3A2C', hash: fakeHash('sample-camila-bloom'), model:'Camila Duarte', brand:'Bloom Cosméticos',
+  product:'Sérum facial vitamina C', format:'Vídeo UGC falado', channels:'Redes sociais, Mídia paga',
+  ter:'Brasil', validUntil:'14/04/2027', date:'14/10/2026'
+};
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      view:'catalog', filter:'Todos', modelId:'m1', productId:'p1', formatId:'ecom',
+      channels:{site:true, social:true}, dur:'6', ter:'BR', brand:'Atelier Aurora',
+      prompt:'Luz natural, ambiente do dia a dia do creator. Ele(a) mostra o produto para a câmera, tom de conversa com a audiência.',
+      generating:false, generated:false, picked:{0:true, 1:true},
+      agencyOk:false, agencyNo:false, modelOk:false, modelNo:false, modelOkAt:'',
+      certs:[], lastId:null, verifyInput:'', vChecked:false, vId:null, importOpen:false
+    };
+  }
+  componentWillUnmount() { clearTimeout(this._t); }
+  top() { try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) {} }
+  nav(view, extra) { this.setState(Object.assign({ view }, extra || {})); this.top(); }
+
+  renderVals() {
+    const s = this.state;
+    const m0 = MODELS.find(x => x.id === s.modelId) || MODELS[0];
+    const p = PRODUCTS.find(x => x.id === s.productId) || PRODUCTS[0];
+    const f = FORMATS.find(x => x.id === s.formatId) || FORMATS[0];
+    const d = DUR.find(x => x.id === s.dur) || DUR[1];
+    const t = TER.find(x => x.id === s.ter) || TER[0];
+    const m = Object.assign({}, m0, {
+      initials: initialsOf(m0.name), first: m0.name.split(' ')[0], tmid: tmidOf(m0),
+      from: fmt(r10(90 * BOARD[m0.board]))
+    });
+    const pol = policyOf(m0, p.cat);
+    const chOn = CHANNELS.filter(c => s.channels[c.id]);
+    const chMult = 1 + chOn.reduce((a, c) => a + c.add, 0);
+    const channelsText = chOn.map(c => c.label).join(', ');
+    const unit = r10(f.base * BOARD[m0.board] * chMult * d.m * t.m);
+    const poses = POSES[f.id];
+    const pickedIdx = Object.keys(s.picked).filter(k => s.picked[k]).map(Number).sort((a, b) => a - b);
+    const n = pickedIdx.length;
+    const total = unit * n;
+    const isVid = f.id === 'ugc';
+    const assetWord = n === 1 ? (isVid ? 'vídeo' : 'imagem') : (isVid ? 'vídeos' : 'imagens');
+
+    const flow = ['profile', 'brief', 'gen', 'approve', 'license'];
+    const fi = flow.indexOf(s.view);
+    const steps = ['Gêmeo', 'Brief', 'Geração', 'Aprovação', 'Licença'].map((label, i) => ({
+      label, n: String(i + 1), cls: 'step' + (i < fi ? ' done' : (i === fi ? ' cur' : ''))
+    }));
+    const inFlow = s.view === 'catalog' || fi >= 0;
+
+    const resetFlow = { generated:false, generating:false, agencyOk:false, agencyNo:false, modelOk:false, modelNo:false };
+
+    const filters = ['Todos',  'Mega',  'Macro',  'Micro'].map(b => ({
+      label: b, cls: 'pill' + (s.filter === b ? ' on' : ''), pick: () => this.setState({ filter: b })
+    }));
+    const models = MODELS.filter(x => s.filter === 'Todos' || x.board === s.filter).map(x => Object.assign({}, x, {
+      initials: initialsOf(x.name), from: fmt(r10(90 * BOARD[x.board])),
+      pick: () => this.nav('profile', Object.assign({ modelId: x.id }, resetFlow))
+    }));
+
+    const formats = FORMATS.map(x => ({
+      name: x.name, desc: x.desc, from: 'desde ' + fmt(r10(x.base * BOARD[m0.board])),
+      cls: 'opt' + (s.formatId === x.id ? ' on' : ''),
+      pick: () => this.setState(Object.assign({ formatId: x.id }, resetFlow))
+    }));
+    const products = PRODUCTS.map(x => {
+      const pp = policyOf(m0, x.cat);
+      return { name: x.name, cat: x.cat, cls: 'opt' + (s.productId === x.id ? ' on' : ''), chipCls: POL[pp].cls, chipLabel: POL[pp].label,
+        pick: () => this.setState(Object.assign({ productId: x.id }, resetFlow)) };
+    });
+    const channels = CHANNELS.map(c => ({
+      label: c.label, cls: 'pill' + (s.channels[c.id] ? ' on' : ''),
+      toggle: () => {
+        const next = Object.assign({}, s.channels, { [c.id]: !s.channels[c.id] });
+        if (!Object.keys(next).some(k => next[k])) return;
+        this.setState({ channels: next });
+      }
+    }));
+    const durs = DUR.map(x => ({ label: x.label, cls: 'pill' + (s.dur === x.id ? ' on' : ''), pick: () => this.setState({ dur: x.id }) }));
+    const ters = TER.map(x => ({ label: x.label, cls: 'pill' + (s.ter === x.id ? ' on' : ''), pick: () => this.setState({ ter: x.id }) }));
+
+    const price = {
+      base: fmt(f.base), board: mult(BOARD[m0.board]), ch: mult(chMult), dur: mult(d.m), ter: mult(t.m),
+      unit: fmt(unit), total: fmt(total), agency: fmt(total * 0.2), model: fmt(total * 0.5)
+    };
+
+    const generate = () => {
+      if (pol === 'blocked') return;
+      clearTimeout(this._t);
+      this.nav('gen', Object.assign({}, resetFlow, { generating: true }));
+      this._t = setTimeout(() => this.setState({ generating: false, generated: true, picked: { 0: true, 1: true } }), 2300);
+    };
+
+    const variations = poses.map((label, i) => ({
+      label, tone: m0.tone, isVideo: isVid, productName: p.name, photo: m0.photo, imgCls: 'vp' + i,
+      cls: 'var' + (s.picked[i] ? ' on' : ''), pressed: s.picked[i] ? 'true' : 'false',
+      check: s.picked[i] ? 'Selecionada' : 'Selecionar',
+      toggle: () => this.setState({ picked: Object.assign({}, s.picked, { [i]: !s.picked[i] }) })
+    }));
+
+    const toApprove = () => {
+      if (n === 0) return;
+      this.nav('approve', { agencyOk: false, agencyNo: false, modelOk: pol === 'auto', modelNo: false });
+    };
+
+    const nowTime = () => { const x = new Date(); return x.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }); };
+    const canIssue = s.agencyOk && s.modelOk && n > 0;
+    const waText = 'Oi, ' + m.first + '! ' + s.brand + ' quer licenciar ' + n + ' ' + assetWord + ' do seu gêmeo com ' + p.name + ' (' + p.cat + '). Uso: ' + channelsText + ', ' + d.label + ', ' + t.label + '. Seu repasse: ' + price.model + '. Responda APROVO ou RECUSO.';
+
+    const issue = () => {
+      if (!canIssue) return;
+      const now = new Date();
+      const until = new Date(now.getTime()); until.setMonth(until.getMonth() + d.months);
+      const h = fakeHash([m0.id, p.id, f.id, s.brand, now.getTime()].join('|'));
+      const id = 'TM-' + now.getFullYear() + '-' + h.slice(0, 6).toUpperCase();
+      const cert = {
+        id, hash: h, model: m0.name, brand: s.brand, product: p.name, format: f.name, channels: channelsText,
+        ter: t.label, date: now.toLocaleDateString('pt-BR'), validUntil: until.toLocaleDateString('pt-BR'),
+        approvals: pol === 'auto' ? 'Licença pré-aprovada + agência' : 'Creator via WhatsApp + agência',
+        assets: pickedIdx.map((k, j) => ({ aid: id + '-' + String(j + 1).padStart(2, '0'), label: poses[k], tone: m0.tone, photo: m0.photo, imgCls: 'vp' + k })),
+        totalFmt: fmt(total), agencyShare: total * 0.2, modelShare: total * 0.5, modelName: m0.name,
+        split: SPLIT.map(x => ({ label: x.label + ' · ' + Math.round(x.pct * 100) + '%', value: fmt(total * x.pct) }))
+      };
+      this.nav('license', { certs: [cert].concat(s.certs), lastId: id });
+    };
+    const cert = s.certs.find(c => c.id === s.lastId) || null;
+
+    const allCerts = s.certs.concat([SAMPLE_CERT]);
+    const sessionAgency = s.certs.reduce((a, c) => a + c.agencyShare, 0);
+    const pendingCurrent = s.generated && !s.agencyOk && !s.agencyNo && fi >= 2 && fi <= 3;
+    const pending = [
+      { brand: 'Loja Vértice', model: 'Rafael Costa', item: 'Campanha · Cerveja artesanal', why: 'Categoria em aprovação manual, aguardando o creator', hasAction: false },
+      { brand: 'Corre Club', model: 'Júlia Martins', item: 'Publi no feed · Tênis de corrida', why: 'Fora do perfil pré-aprovado, aguardando a agência', hasAction: false }
+    ];
+    if (pendingCurrent) pending.unshift({ brand: s.brand, model: m0.name, item: f.name + ' · ' + p.name, why: pol === 'auto' ? 'Pré-aprovado pelo creator, falta a agência' : 'Precisa da agência e do creator', hasAction: true, review: () => this.nav('approve') });
+
+    const kpis = [
+      { label: 'Gêmeos verificados', value: String(MODELS.length), note: 'de [N] creators no casting' },
+      { label: 'Licenças ativas', value: String(23 + s.certs.length), note: 'em 11 marcas' },
+      { label: 'Repasse da agência no mês', value: fmt(18420 + sessionAgency), note: '20% de cada licença' },
+      { label: 'Aprovações pendentes', value: String(pending.length), note: 'fora do perfil pré-aprovado' }
+    ];
+    const roster = MODELS.map(x => {
+      const mine = s.certs.filter(c => c.modelName === x.name);
+      return { name: x.name, board: x.board, tone: x.tone, initials: initialsOf(x.name), photo: x.photo,
+        lic: String(Math.round(x.jobs / 3) + mine.length),
+        rev: fmt(x.jobs * 210 + mine.reduce((a, c) => a + c.modelShare, 0)) };
+    });
+    const recent = allCerts.slice(0, 4).map(c => ({ id: c.id, model: c.model, brand: c.brand }));
+
+    const vId = s.vChecked ? s.vId : null;
+    const vc = vId ? (allCerts.find(c => c.id === vId) || null) : null;
+
+    return {
+      s, m, p, f, d, t, n, assetWord, channelsText, price, steps, filters, models, formats, products, channels, durs, ters, variations,
+      showStepper: fi >= 0,
+      nav: { catalog: 'tab' + (inFlow ? ' on' : ''), agency: 'tab' + (s.view === 'agency' ? ' on' : ''), verify: 'tab' + (s.view === 'verify' ? ' on' : '') },
+      isCatalog: s.view === 'catalog', isProfile: s.view === 'profile', isBrief: s.view === 'brief', isGen: s.view === 'gen',
+      isApprove: s.view === 'approve', isLicense: s.view === 'license', isAgency: s.view === 'agency', isVerify: s.view === 'verify',
+      goCatalog: () => this.nav('catalog'), goAgency: () => this.nav('agency'), goVerify: () => this.nav('verify', { vChecked: false }),
+      goProfile: () => this.nav('profile'), goBrief: () => this.nav('brief'), goGen: () => this.nav('gen'),
+      goVerifyCert: () => this.nav('verify', { verifyInput: s.lastId || '', vChecked: true, vId: s.lastId }),
+      okList: m0.ok.map(label => ({ label })), manualList: m0.manual.map(label => ({ label })), blockedList: m0.blocked.map(label => ({ label })),
+      polChip: POL[pol].cls, polText: POL[pol].label + ' para ' + p.cat,
+      isBlocked: pol === 'blocked', notBlocked: pol !== 'blocked', isAuto: pol === 'auto', isManual: pol === 'manual',
+      setBrand: (e) => this.setState({ brand: e.target.value }),
+      setPrompt: (e) => this.setState({ prompt: e.target.value }),
+      prompt: s.prompt, brand: s.brand,
+      generate, toApprove, sendCls: n > 0 ? 'btn' : 'btn off',
+      agencyPending: !s.agencyOk && !s.agencyNo,
+      agencyStatus: s.agencyOk ? 'Aprovado' : (s.agencyNo ? 'Recusado' : 'Pendente'),
+      agencyChip: s.agencyOk ? 'chip c-auto' : (s.agencyNo ? 'chip c-blk' : 'chip c-man'),
+      approveAgency: () => this.setState({ agencyOk: true, agencyNo: false }),
+      rejectAgency: () => this.setState({ agencyNo: true }),
+      undoAgency: () => this.setState({ agencyNo: false }),
+      modelPending: !s.modelOk && !s.modelNo,
+      modelStatus: s.modelOk ? (pol === 'auto' ? 'Pré-aprovado' : 'Aprovado') : (s.modelNo ? 'Recusado' : 'Aguardando WhatsApp'),
+      modelChip: s.modelOk ? 'chip c-auto' : (s.modelNo ? 'chip c-blk' : 'chip c-man'),
+      approveModel: () => this.setState({ modelOk: true, modelNo: false, modelOkAt: nowTime() }),
+      rejectModel: () => this.setState({ modelNo: true }),
+      undoModel: () => this.setState({ modelNo: false }),
+      waText, issue, issueCls: canIssue ? 'btn' : 'btn off',
+      hasCert: !!cert, cert: cert || { assets: [], split: [] },
+      kpis, roster, pending, recent,
+      toggleImport: () => this.setState({ importOpen: !s.importOpen }),
+      importLabel: s.importOpen ? 'Fechar' : 'Ver como funciona',
+      setVerify: (e) => this.setState({ verifyInput: e.target.value, vChecked: false }),
+      doVerify: () => this.setState({ vChecked: true, vId: s.verifyInput.trim().toUpperCase() }),
+      useLast: () => this.setState({ verifyInput: s.lastId, vChecked: true, vId: s.lastId }),
+      useSample: () => this.setState({ verifyInput: SAMPLE_CERT.id, vChecked: true, vId: SAMPLE_CERT.id }),
+      useFake: () => this.setState({ verifyInput: 'TM-2026-000000', vChecked: true, vId: 'TM-2026-000000' }),
+      hasLast: !!s.lastId,
+      vFound: !!vc, vNone: s.vChecked && !vc, vc: vc || {}
+    };
+  }
+}
+</script>
+</body>
+</html>
